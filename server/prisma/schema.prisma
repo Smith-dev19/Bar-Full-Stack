@@ -6,10 +6,57 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Roles {
+  id Int @id @default(autoincrement())
+  name String
+  user User[]
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  userName String
+  password String
+  name String 
+  lastName String
+  email String @unique
+  phone String
+  roleId Int?
+  storeId Int?
+  role Roles? @relation(fields: [roleId], references: [id])
+  store Stores? @relation(fields: [storeId], references: [id])
+}
+model Stores{
+  id Int @id @default(autoincrement())
+  name String
+  addres String
+  phone String
+  numberTables Int
+  user User[]
+  inventory Inventory[]
+}
+
+model Inventory {
+  id Int @id @default(autoincrement())
+  nameProduct String
+  typeId Int
+  purchasePrice BigInt
+  salePrice BigInt
+  stock BigInt
+  storeId Int
+  store Stores @relation(fields: [storeId], references: [id])
+  type Product @relation(fields: [typeId], references: [id])
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  inventory Inventory[]
 }
