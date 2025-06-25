@@ -30,13 +30,15 @@ model User {
   phone String
   roleId Int?
   storeId Int?
+  statusId Int?
   role Roles? @relation(fields: [roleId], references: [id])
   store Stores? @relation(fields: [storeId], references: [id])
+  status Status? @relation(fields: [statusId], references: [id])
 }
 model Stores{
   id Int @id @default(autoincrement())
   name String
-  addres String
+  addres String @unique
   phone String
   numberTables Int
   user User[]
@@ -59,4 +61,10 @@ model Product {
   id Int @id @default(autoincrement())
   name String
   inventory Inventory[]
+}
+
+model Status {
+  id Int @id @default(autoincrement())
+  status String
+  user User[] 
 }

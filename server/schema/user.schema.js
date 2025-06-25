@@ -7,9 +7,9 @@ export const registerSchema = z.object({
   name: z.string({
     required_error: "Name is required",
   }),
-  lastName : z.string({
-    required_error: 'Last name is required'
-}),
+  lastName: z.string({
+    required_error: "Last name is required",
+  }),
   email: z
     .string({
       required_error: "email is required",
@@ -19,9 +19,25 @@ export const registerSchema = z.object({
     .string({
       required_error: "Password is required",
     })
-    .min(6,"Password must be at least 6 characters"),
-    phone: z
+    .min(6, "Password must be at least 6 characters"),
+  phone: z
     .string({
       required_error: "Phone is required",
-    }).max(10)
+    })
+    .max(10),
 });
+
+export const loginSchema = z.object({
+  email: z
+    .string({
+      required_error: "Email is incorrect",
+    })
+    .email(),
+  password: z
+    .string({
+      required_error: "Password is required",
+    })
+    .min(6, "Password must be at least 6 characters"),
+});
+
+
